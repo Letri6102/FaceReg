@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Check-in khuôn mặt</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Xác thực thí sinh trước giờ thi</h1>
+  </header>
+  <main class="checkin-wrap">
+
+    <section id="formCard" class="card">
+      <h2>Nhập thông tin</h2>
+      <label for="code">Số báo danh / Mã thí sinh</label>
+      <input id="code" type="text" autocomplete="off" placeholder="VD: 2024001234">
+      <div id="examRow">
+        <label for="exam">Mã kỳ thi / ca thi (nếu có)</label>
+        <input id="exam" type="text" autocomplete="off">
+      </div>
+      <ul class="muted">
+        <li>Ngồi nơi đủ sáng, ánh sáng chiếu từ phía trước mặt.</li>
+        <li>Tháo khẩu trang, kính râm, mũ. Chỉ một người trước camera.</li>
+        <li>Làm theo hướng dẫn trên màn hình: nhìn thẳng, quay trái/phải hoặc ngẩng lên.</li>
+      </ul>
+      <div id="formError" class="alert bad hidden"></div>
+      <button id="startBtn">Bắt đầu xác thực</button>
+    </section>
+
+    <section id="camCard" class="card hidden">
+      <div class="cam">
+        <video id="video" autoplay playsinline muted></video>
+        <div id="oval" class="oval"></div>
+        <div id="instruction" class="instruction">Đang mở camera...</div>
+        <div id="feedback" class="feedback"></div>
+      </div>
+      <div id="steps" class="steps"></div>
+      <div class="muted" id="timer"></div>
+    </section>
+
+    <section id="resultCard" class="card hidden">
+      <div class="result">
+        <div id="resultBadge"></div>
+        <div id="resultText" class="big"></div>
+        <div id="resultSub" class="muted"></div>
+        <p><button id="retryBtn" class="secondary hidden">Thử lại</button></p>
+      </div>
+    </section>
+
+    <canvas id="canvas" class="hidden"></canvas>
+  </main>
+  <script src="/static/js/checkin.js"></script>
+</body>
+</html>

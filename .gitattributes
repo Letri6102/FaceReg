@@ -1,0 +1,7 @@
+# Giữ xuống dòng CRLF cho file .bat để cmd.exe chạy đúng
+*.bat text eol=crlf
+*.py text eol=lf
+*.js text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf

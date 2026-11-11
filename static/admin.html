@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản trị FaceReg</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>FaceReg · Quản trị</h1>
+    <nav><a href="/checkin" target="_blank">Trang check-in</a><a href="#" id="logoutLink" class="hidden">Đăng xuất</a></nav>
+  </header>
+  <main>
+    <section id="loginCard" class="card">
+      <h2>Đăng nhập</h2>
+      <label for="token">Mã quản trị (ADMIN_TOKEN trong file .env)</label>
+      <input id="token" type="password">
+      <div id="loginError" class="alert bad hidden"></div>
+      <p><button id="loginBtn">Đăng nhập</button></p>
+    </section>
+
+    <div id="app" class="hidden">
+      <div class="tabs">
+        <button data-tab="review" class="active">Chờ duyệt <span id="reviewCount"></span></button>
+        <button data-tab="enroll">Đăng ký thí sinh</button>
+        <button data-tab="candidates">Danh sách thí sinh</button>
+        <button data-tab="history">Lịch sử check-in</button>
+      </div>
+
+      <section data-panel="review" class="card">
+        <div class="row">
+          <h2 style="flex:1 1 auto">Check-in cần giám thị xác nhận</h2>
+          <div style="flex:0 0 auto"><button class="secondary" id="refreshReview">Làm mới</button></div>
+        </div>
+        <p class="muted">So sánh ảnh đăng ký (trái) với ảnh chụp lúc check-in (phải). Tự động làm mới mỗi 10 giây.</p>
+        <div id="reviewList" class="review-grid"></div>
+      </section>
+
+      <section data-panel="enroll" class="card hidden">
+        <h2>Đăng ký ảnh 4x6</h2>
+        <p class="muted">Ảnh chụp thẳng, rõ nét, không đeo kính râm/khẩu trang, ưu tiên file ảnh gốc thay vì chụp lại bản in. Đăng ký hàng loạt: xem <code>scripts/bulk_enroll.py</code>.</p>
+        <div class="row">
+          <div><label for="enCode">Số báo danh / Mã thí sinh</label><input id="enCode" type="text"></div>
+          <div><label for="enName">Họ và tên</label><input id="enName" type="text"></div>
+        </div>
+        <label for="enPhoto">Ảnh 4x6 (JPG/PNG)</label>
+        <input id="enPhoto" type="file" accept="image/*">
+        <label><input id="enReplace" type="checkbox"> Thay ảnh nếu thí sinh đã tồn tại (xóa toàn bộ dữ liệu khuôn mặt cũ)</label>
+        <p><button id="enrollBtn">Đăng ký</button></p>
+        <div id="enrollResult"></div>
+      </section>
+
+      <section data-panel="candidates" class="card hidden">
+        <div class="row">
+          <div><label for="candQ">Tìm theo mã hoặc tên</label><input id="candQ" type="text"></div>
+          <div style="flex:0 0 auto"><button id="candSearch">Tìm</button></div>
+        </div>
+        <table>
+          <thead><tr><th>Ảnh</th><th>Mã</th><th>Họ tên</th><th>Mẫu webcam</th><th>Số lần check-in</th><th>Cập nhật</th><th></th></tr></thead>
+          <tbody id="candBody"></tbody>
+        </table>
+      </section>
+
+      <section data-panel="history" class="card hidden">
+        <div class="row">
+          <div><label for="hStatus">Trạng thái</label>
+            <select id="hStatus"><option value="">Tất cả</option><option>ACCEPT</option><option>REVIEW</option><option>REJECT</option></select></div>
+          <div><label for="hExam">Mã kỳ thi</label><input id="hExam" type="text"></div>
+          <div><label for="hCand">Mã thí sinh</label><input id="hCand" type="text"></div>
+          <div style="flex:0 0 auto"><button id="hSearch">Lọc</button></div>
+        </div>
+        <table>
+          <thead><tr><th>#</th><th>Thời gian</th><th>Thí sinh</th><th>Kỳ thi</th><th>Điểm</th><th>Liveness</th><th>Hệ thống</th><th>Cuối cùng</th><th>Cảnh báo giám sát</th></tr></thead>
+          <tbody id="hBody"></tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>
